@@ -83,3 +83,31 @@ const styles = {
     padding: '8px 16px 16px',
   },
 };
+
+
+// App.jsx
+import React, { useState } from 'react';
+import Modal from './Modal';
+import './App.css';
+
+function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <div className="app-container">
+      <div className="card" onClick={() => setIsModalOpen(true)}>
+        <div className="card-text">click here</div>
+      </div>
+
+      {isModalOpen && (
+        <Modal onClose={() => setIsModalOpen(false)}>
+          <h2>inside of the modal</h2>
+          <p>click outside of the modal or X button to close it</p>
+        </Modal>
+      )}
+    </div>
+  );
+}
+
+export default App;
+
