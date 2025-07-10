@@ -111,3 +111,32 @@ function App() {
 
 export default App;
 
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
+import './Modal.css';
+
+function Modal({ onClose, children }) {
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [onClose]);
+
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) onClose();
+  };
+
+  return ReactDOM.createPortal(
+    <div className="modal-backdrop" onClick={handleBackdropClick}>
+      <div className="modal-box">
+        <button className="close-btn" onClick={onClose}>X</button>
+        {children}
+      </div>
+    </div>,
+    document.body
+  );
+}
+
+export default Modal;
